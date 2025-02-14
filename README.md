@@ -79,21 +79,6 @@ Below is a high-level description of the steps in the COREBEHRT pipeline. For de
 The pipeline can be run from the root directory by executing the following commands:
 
 ```bash
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-(.venv) python -m corebehrt.main.create_data
-(.venv) python -m corebehrt.main.pretrain
-(.venv) python -m corebehrt.main.create_outcomes
-(.venv) python -m corebehrt.main.select_cohort
-(.venv) python -m corebehrt.main.finetune_cv
-(.venv) python -m corebehrt.main.evaluate_cv # not implemented yet
-```
-
-```bash
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 (.venv) python3 -m corebehrt.main.create_data
 (.venv) python3 -m corebehrt.main.pretrain
 (.venv) python3 -m corebehrt.main.create_outcomes
@@ -101,6 +86,7 @@ The pipeline can be run from the root directory by executing the following comma
 (.venv) python3 -m corebehrt.main.finetune_cv
 (.venv) python3 -m corebehrt.main.evaluate_cv # not implemented yet
 ```
+
 
 
 ### 1. Create Data
