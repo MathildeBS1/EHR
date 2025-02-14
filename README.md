@@ -80,6 +80,7 @@ The pipeline can be run from the root directory by executing the following comma
 
 ```bash
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 (.venv) python -m corebehrt.main.create_data
 (.venv) python -m corebehrt.main.pretrain
 (.venv) python -m corebehrt.main.create_outcomes
@@ -89,6 +90,8 @@ The pipeline can be run from the root directory by executing the following comma
 ```
 
 ```bash
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 (.venv) python3 -m corebehrt.main.create_data
