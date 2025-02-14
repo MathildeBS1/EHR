@@ -58,6 +58,15 @@ Below is a high-level overview of the most important directories:
 
 For running tests and pipelines, create and activate a virtual environment, then install the required dependencies:
 
+m -rf .venv
+deactivate 
+conda deactivate 
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip setuptools wheel
+pip install "dask[complete]<2024.11.2"
+(.venv) pip install -r requirements.txt
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -77,6 +86,16 @@ The pipeline can be run from the root directory by executing the following comma
 (.venv) python -m corebehrt.main.finetune_cv
 (.venv) python -m corebehrt.main.evaluate_cv # not implemented yet
 ```
+
+```bash
+(.venv) python3 -m corebehrt.main.create_data
+(.venv) python3 -m corebehrt.main.pretrain
+(.venv) python3 -m corebehrt.main.create_outcomes
+(.venv) python3 -m corebehrt.main.create_cohort
+(.venv) python3 -m corebehrt.main.finetune_cv
+(.venv) python3 -m corebehrt.main.evaluate_cv # not implemented yet
+```
+
 
 ### 1. Create Data
 
