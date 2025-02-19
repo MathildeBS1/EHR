@@ -4,26 +4,27 @@ logging:
 
 paths:
   ### Inputs
-  patients_info: ./example_data/example_data_w_labs/patients_info.csv
-  initial_pids: ./outputs/tokenized/pids_finetune.pt # Initial patients to select from [list of pids] (optional)
-  exposure: ./outputs/outcomes/TEST_CENSOR.csv # Exposure, optional, set to outcome if not provided. For multiple exposures, create a joint exposure file.
-  outcome: ./outputs/outcomes/TEST_OUTCOME.csv # Outcome
+  patients_info: "azureml://subscriptions/f8c5aac3-29fc-4387-858a-1f61722fb57a/resourcegroups/forskerpl-n0ybkr-rg/workspaces/forskerpl-n0ybkr-mlw/datastores/workspaceblobstore/paths/BREAST_CANCER/formatted_data/med_diag_lab_proc_2024/patients_info.parquet"
+  initial_pids: "azureml://subscriptions/f8c5aac3-29fc-4387-858a-1f61722fb57a/resourcegroups/forskerpl-n0ybkr-rg/workspaces/forskerpl-n0ybkr-mlw/datastores/researcher_data/paths/corebehrt/data/2024-09-10/old_bc_mdplv/v01/tokenized/pids_finetune.pt"
+    
+  # exposure: ./outputs/outcomes/TEST_CENSOR.csv # Exposure, optional, set to outcome if not provided. For multiple exposures, create a joint exposure file.
+  
+  outcome: "azureml://subscriptions/f8c5aac3-29fc-4387-858a-1f61722fb57a/resourcegroups/forskerpl-n0ybkr-rg/workspaces/forskerpl-n0ybkr-mlw/datastores/researcher_data/paths/test_setup/corebehrt/outcomes/breast_cancer/breast_cancer.csv"
+  
   # exclude_pids: # optional, if provided, exclude these pids from the cohort
   
   ### Outputs
-  cohort: ./outputs/cohort # Data directory
-
-
+  cohort:  "researcher-data:test_setup/corebehrt/cohort/breast_cancer_3m" # Data directory
 
 selection:
-  exclude_prior_outcomes: true # Exclude patients who had the outcome before index date
+  exclude_prior_outcomes: false # Exclude patients who had the outcome before index date
   exposed_only: false # Exclude patients who are not exposed
   age:
-    min_years: 18 # Minimum age to include (inclusive)
+    min_years: 30 # Minimum age to include (inclusive)
     max_years: 120 # Maximum age to include (inclusive)
   categories: # here we can include OR exclude categories
     GENDER: # column name in the data
-      include: [M] # include only M/ exclude keyword can be used as well.
+      include: [Kvinde] # include only M/ exclude keyword can be used as well.
 
 index_date: # if not provided we can use exposures to get the index dates
   mode: relative # absolute or relative (to exposure)
@@ -32,7 +33,7 @@ index_date: # if not provided we can use exposures to get the index dates
     month: 1
     day: 26
   relative: # takes first exposure as index date
-    n_hours_from_exposure: -24 # negative means before exposure, 0 by default
+    n_hours_from_exposure: -2160 # negative means before exposure, 0 by default
 
 cv_folds: 5 # can be set to 1 if only a simple train/val split is needed
 test_ratio: 0.1 # can be set to 1 for test set creation only
