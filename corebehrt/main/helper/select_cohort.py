@@ -17,9 +17,9 @@ from corebehrt.modules.cohort_handling.patient_filter import (
 )
 from corebehrt.modules.features.loader import ConceptLoader
 
-
 def select_cohort(
     path_cfg, selection_cfg, index_date_cfg, test_ratio, logger
+   #            selection      index_date    
 ) -> Tuple[List[str], pd.Series, List[str], List[str]]:
     """
     Select cohort by applying multiple filtering steps.
@@ -35,15 +35,15 @@ def select_cohort(
     The rationale behind absolute index dates and test shift is to simulate a real-world deployment scenario:
       - The model is trained using data up to a fixed cutoff (absolute index date),
         with input data defined relative to that date.
-      - For testing, the index date is shifted (using test_shift_hours) to mimic a
-        future prediction scenario, ensuring that both input and outcome windows are
-        appropriately aligned with a prospective evaluation.
+      - For testing, the index date is shifted (using test_shift_hours) to mimic a future prediction scenario, 
+        ensuring that both input and outcome windows are appropriately aligned with a prospective evaluation.
 
     Args:
         path_cfg: Configuration dictionary
         selection_cfg: Configuration dictionary
         index_date_cfg: Configuration dictionary
         logger: Logger object
+    
     Returns:
         Tuple of:
           - Final patient IDs (list)
@@ -70,10 +70,11 @@ def select_cohort(
         patients_info = exclude_pids_from_df(patients_info, exclude_pids)
         log_patient_num(logger, patients_info)
 
+    ######### If we have exposures, filter patients based on them #########
     if selection_cfg.get("exposed_only", False):
-        logger.info("Filtering by exposures")
-
-        patients_info = filter_df_by_pids(patients_info, exposures[PID_COL])
+        logger.info("Filtering by exposures (patients with mammograms only)")
+        patients_info = filter_df_by_pids(patients_info, exposures[PID_COL]) # !!!
+        # patients_info = filter_df_by_pids(patients_info, exposures[ADMISSION_ID]) # !!!
         log_patient_num(logger, patients_info)
 
     if selection_cfg.get("categories", False):
@@ -135,6 +136,7 @@ def select_cohort(
         train_val_pids,
         test_pids,
     )
+
 
 
 def log_patient_num(logger, patients_info):
